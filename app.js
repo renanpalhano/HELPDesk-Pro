@@ -47,9 +47,10 @@ function openUserManagement(person){
  document.body.append(dialog);dialog.onclose=()=>dialog.remove();dialog.querySelector("[data-cancel]").onclick=()=>dialog.close();
  dialog.querySelector("form").onsubmit=async event=>{
   event.preventDefault();const buttons=dialog.querySelectorAll("button"),errorBox=dialog.querySelector("[data-user-error]");buttons.forEach(b=>b.disabled=true);errorBox.textContent="";
-  try{const {error}=await client.rpc("helpdesk_manage_user",{p_user_id:person.id,p_role:dialog.querySelector("#managedRole").value,p_is_active:dialog.querySelector("#managedActive").value==="true",p_expected_role:person.role,p_expected_active:person.is_active});if(error)throw error;if(stamp!==version)return;dialog.close();await loadDirectory();notice(t("saved"));}
-  catch(error){if(stamp===version)errorBox.textContent=/staff_password_required/.test(error.message||"")?t("userPasswordRequired"):/approval_required/.test(error.message||"")?t("userApprovalRequired"):error.code==="PGRST202"?t("userSetupRequired"):errorText(error);}
-  finally{buttons.forEach(b=>b.disabled=false);}
+  const controller=new AbortController();let timer;
+  try{const request=client.rpc("helpdesk_manage_user",{p_user_id:person.id,p_role:dialog.querySelector("#managedRole").value,p_is_active:dialog.querySelector("#managedActive").value==="true",p_expected_role:person.role,p_expected_active:person.is_active}).abortSignal(controller.signal);const timeout=new Promise((_,reject)=>{timer=window.setTimeout(()=>{controller.abort();reject(new Error("user_save_timeout"));},15000);});const {error}=await Promise.race([request,timeout]);if(error)throw error;if(stamp!==version)return;dialog.close();await loadDirectory();notice(t("saved"));}
+  catch(error){if(stamp===version)errorBox.textContent=controller.signal.aborted?t("userSaveTimeout"):/staff_password_required/.test(error.message||"")?t("userPasswordRequired"):/approval_required/.test(error.message||"")?t("userApprovalRequired"):error.code==="PGRST202"?t("userSetupRequired"):errorText(error);}
+  finally{window.clearTimeout(timer);buttons.forEach(b=>b.disabled=false);}
  };dialog.showModal();
 }
 function assigneeName(id){return profiles.find(p=>p.id===id)?.full_name||id||t("none");}
