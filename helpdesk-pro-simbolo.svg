@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108" role="img" aria-label="Símbolo HELPDesk Pro"><defs><linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2563EB"/><stop offset="1" stop-color="#0B1E3A"/></linearGradient><linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#06B6D4"/><stop offset="1" stop-color="#2563EB"/></linearGradient></defs>
+<path fill="url(#blue)" d="M17 15 Q17 9 23 9 L35 9 Q40 9 40 14 L40 46 L59 29 Q65 24 71 29 L86 42 Q91 46 91 53 L91 88 Q91 94 85 94 L73 94 Q67 94 67 88 L67 59 L47 76 Q41 81 35 76 L21 64 Q17 60 17 53 Z"/>
+<path fill="url(#cyan)" d="M17 15 Q17 9 23 9 L35 9 Q40 9 40 14 L40 46 L59 29 Q65 24 71 29 L77 34 L44 65 Q39 70 34 65 L17 50 Z"/>
+<path fill="#0B1E3A" d="M17 72 L34 84 Q39 88 39 94 L39 96 L23 96 Q17 96 17 90 Z"/>
+<circle cx="81" cy="15" r="10" fill="#06B6D4"/></svg>

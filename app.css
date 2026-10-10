@@ -53,3 +53,14 @@ html{color-scheme:light}html[data-theme="dark"]{color-scheme:dark;--ink:#e7eefb;
 [data-theme="dark"] .status-badge[data-status="Em atendimento"]{background:#4c3b1c;color:#ffe5a2;border-color:#796037}
 [data-theme="dark"] .status-badge[data-status="Resolvido"]{background:#174637;color:#b7f5d7;border-color:#316b55}
 [data-theme="dark"] .status-badge[data-status="Encerrado"]{background:#233e69;color:#c8dcff;border-color:#416496}
+/* Official HELPDesk Pro identity supplied by the project owner. */
+:root{--primary:#2563eb;--ink:#1e293b;--border:#e2e8f0;font-family:"Plus Jakarta Sans",Inter,Arial,sans-serif}
+.brand:before{display:none}.brand img{width:245px;height:auto;display:block}.brand-dark{display:none!important}
+[data-theme="dark"] .brand-light{display:none!important}[data-theme="dark"] .brand-dark{display:block!important}
+.auth-brand{margin-bottom:24px}.auth-brand img{width:100%;max-width:290px;height:auto}
+button,.button{background:linear-gradient(120deg,#2563eb,#3477f0)}.hero .card,.help{background:linear-gradient(130deg,#0b1e3a,#173f76)}
+.hero .card .eyebrow{color:#7de3f1}.hero .card:after{content:"";position:absolute;right:28px;top:28px;width:8px;height:8px;border-radius:50%;background:#06b6d4;box-shadow:0 0 20px #06b6d460}
+.stats .card{border-top-color:#06b6d4}.step{color:#2563eb}.eyebrow{color:#2563eb}
+[data-theme="dark"]{--bg:#0b1e3a;--primary:#a6c6ff}[data-theme="dark"] .eyebrow{color:#80dfef}
+[data-theme="dark"] header{background:#0b1e3af2}[data-theme="dark"] .hero .card{background:linear-gradient(130deg,#132d52,#174778)}
+@media(max-width:740px){.brand img{width:215px}header>div{padding:14px 16px}}
