@@ -39,7 +39,19 @@ function renderTickets(){if(!profile)return;const counts=[tickets.length,...["Ab
  $("tickets").innerHTML=filtered.length?filtered.map(x=>`<article class="ticket"><div><small>CH-${esc(x.ticket_number)} · ${esc(date(x.created_at))}</small><h3>${esc(x.title)}</h3><span class="badge status-badge" data-status="${esc(x.status)}">${esc(C.domain(x.status))}</span><span class="badge">${esc(C.domain(x.priority))}</span><small>${esc(x.requester_name||t("requester"))}</small></div><button class="secondary" data-detail="${esc(x.id)}">${t("details")}</button></article>`).join(""):`<p class="card">${t("empty")}</p>`;
  $("page").textContent=t("page")+" "+(page+1);$("previous").disabled=page===0;$("next").disabled=tickets.length<50;
 }
-function renderPeople(){if(!profile)return;$("people").hidden=profile.role!=="admin";if(profile.role!=="admin")return;$("people").innerHTML=`<h2>${t("people")}</h2><p>${t("peopleHint")}</p>`+profiles.map(p=>`<p><strong>${esc(p.full_name)}</strong> · ${esc(t(p.role))} · ${p.is_active?"✓":"—"}</p>`).join("");}
+function renderPeople(){if(!profile)return;$("people").hidden=profile.role!=="admin";if(profile.role!=="admin")return;$("people").innerHTML=`<h2>${t("people")}</h2><p>${t("peopleHint")}</p>`+profiles.map(p=>`<p><strong>${esc(p.full_name)}</strong> · ${esc(t(p.role))} · ${esc(t(p.is_active?"userActive":"userInactive"))} ${p.role!=="admin"&&p.id!==profile.id?`<button type="button" class="secondary" data-manage-user="${esc(p.id)}">${t("manageUser")}</button>`:""}</p>`).join("");$("people").querySelectorAll("[data-manage-user]").forEach(button=>{button.onclick=()=>openUserManagement(profiles.find(p=>p.id===button.dataset.manageUser));});}
+function openUserManagement(person){
+ if(!person||profile?.role!=="admin"||person.role==="admin"||person.id===profile.id)return;
+ const dialog=document.createElement("dialog"),stamp=version;
+ dialog.innerHTML=`<h2>${t("manageUser")}</h2><p><strong>${esc(person.full_name)}</strong><br>${esc(person.email)}</p><p>${t("manageUserHint")}</p><form><div class="field"><label for="managedRole">${t("userRole")}</label><select id="managedRole">${["requester","technician"].map(role=>`<option value="${role}" ${person.role===role?"selected":""}>${t(role)}</option>`).join("")}</select></div><div class="field"><label for="managedActive">${t("userAccess")}</label><select id="managedActive"><option value="true" ${person.is_active?"selected":""}>${t("userActive")}</option><option value="false" ${!person.is_active?"selected":""}>${t("userInactive")}</option></select></div><p role="alert" data-user-error></p><div class="actions"><button type="submit">${t("save")}</button><button type="button" class="secondary" data-cancel>${t("cancel")}</button></div></form>`;
+ document.body.append(dialog);dialog.onclose=()=>dialog.remove();dialog.querySelector("[data-cancel]").onclick=()=>dialog.close();
+ dialog.querySelector("form").onsubmit=async event=>{
+  event.preventDefault();const buttons=dialog.querySelectorAll("button"),errorBox=dialog.querySelector("[data-user-error]");buttons.forEach(b=>b.disabled=true);errorBox.textContent="";
+  try{const {error}=await client.rpc("helpdesk_manage_user",{p_user_id:person.id,p_role:dialog.querySelector("#managedRole").value,p_is_active:dialog.querySelector("#managedActive").value==="true",p_expected_role:person.role,p_expected_active:person.is_active});if(error)throw error;if(stamp!==version)return;dialog.close();await loadDirectory();notice(t("saved"));}
+  catch(error){if(stamp===version)errorBox.textContent=/staff_password_required/.test(error.message||"")?t("userPasswordRequired"):/approval_required/.test(error.message||"")?t("userApprovalRequired"):error.code==="PGRST202"?t("userSetupRequired"):errorText(error);}
+  finally{buttons.forEach(b=>b.disabled=false);}
+ };dialog.showModal();
+}
 function assigneeName(id){return profiles.find(p=>p.id===id)?.full_name||id||t("none");}
 function renderDetail(x){
  const staff=profile.role!=="requester",admin=profile.role==="admin",canAssign=D.canAssign(profile,x);
