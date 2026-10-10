@@ -39,3 +39,17 @@ dialog{padding:26px;box-shadow:0 24px 80px #13254e40}dialog::backdrop{background
 @keyframes step-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:740px){.hero{gap:24px;padding:30px 0}.hero .card{min-height:0;padding:26px}nav{gap:8px}#identity{font-size:.85rem;flex:1}.help{padding:26px}.how-section .card{margin-bottom:0}#people button{margin-left:0}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}button:hover:not(:disabled),.how-section .card:hover{transform:none}}
+html{color-scheme:light}html[data-theme="dark"]{color-scheme:dark;--ink:#e7eefb;--muted:#acbcd4;--border:#2c405d;--bg:#0d1728;--primary:#8fb5ff}
+[data-theme="dark"] body{background:radial-gradient(ellipse at 85% 0,#1a2f53 0,transparent 45%),var(--bg)}
+[data-theme="dark"] header{background:#111e32ed}[data-theme="dark"] .card,[data-theme="dark"] .ticket,[data-theme="dark"] dialog{background:#16243a}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#111e31;color:var(--ink);border-color:#425672}
+[data-theme="dark"] button.secondary{background:#243855;color:#bfd2fa}[data-theme="dark"] .hero .eyebrow,[data-theme="dark"] .step,[data-theme="dark"] .badge{background:#243a5c;color:#bdd6ff;border-color:#3e5a80}
+[data-theme="dark"] .hero .card{background:linear-gradient(135deg,#183660,#225487)}[data-theme="dark"] .hero .card .eyebrow{color:#b6edf3}
+[data-theme="dark"] .hero .card .badge[data-copy="resolved"]{background:#b5f4d9;color:#12543d}
+[data-theme="dark"] .stats strong{color:#c1d6ff}[data-theme="dark"] .photo-settings{background:#1f334e}
+[data-theme="dark"] .avatar-fallback{background:#294369;color:#bdd6ff}[data-theme="dark"] .avatar-image,[data-theme="dark"] .avatar-fallback{border-color:#20334f}
+[data-theme="dark"] .message{background:#173f37;color:#bcebdc}[data-theme="dark"] .message.error{background:#4b2530;color:#ffd0d6}
+[data-theme="dark"] .status-badge[data-status="Aberto"]{background:#5b2736;color:#ffd0d7;border-color:#854050}
+[data-theme="dark"] .status-badge[data-status="Em atendimento"]{background:#4c3b1c;color:#ffe5a2;border-color:#796037}
+[data-theme="dark"] .status-badge[data-status="Resolvido"]{background:#174637;color:#b7f5d7;border-color:#316b55}
+[data-theme="dark"] .status-badge[data-status="Encerrado"]{background:#233e69;color:#c8dcff;border-color:#416496}
