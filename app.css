@@ -83,5 +83,29 @@ dialog[open]{animation:modal-in .18s ease-out}.message{animation:notice-in .18s 
 @keyframes modal-in{from{opacity:0;transform:translateY(4px) scale(.99)}to{opacity:1;transform:none}}
 @keyframes notice-in{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
 @media(max-width:740px){.brand svg{width:235px}}
+/* Small, finite signals of motion; no perpetual shimmer or false loading. */
+.tech-reveal{opacity:0;transform:translateY(14px);transition:opacity 420ms ease-out,transform 420ms cubic-bezier(.2,.7,.2,1);transition-delay:var(--reveal-delay,0ms)}
+.tech-reveal.tech-visible{opacity:1;transform:none}
+.how-section .card{animation:none;overflow:hidden}
+.how-section .card:before{content:"";position:absolute;left:26px;right:26px;top:0;height:2px;background:linear-gradient(90deg,var(--accent-primary),var(--accent-secondary),transparent);transform:scaleX(0);transform-origin:left;pointer-events:none}
+.how-section .tech-visible:before{animation:tech-trace 650ms 180ms ease-out forwards}
+.how-section .tech-visible .step{animation:tech-step 450ms 120ms ease-out both}
+.hero aside.tech-visible:before{animation:tech-grid 1100ms ease-out both}
+.hero aside.tech-visible:after{animation:tech-signal 900ms ease-out 2}
+.hero aside.tech-visible .badge{animation:tech-flow 600ms ease-out both}
+.hero aside.tech-visible .badge[data-copy="working"]{animation-delay:300ms}
+.hero aside.tech-visible .badge[data-copy="resolved"]{animation-delay:600ms}
+button:not(.secondary):not(.danger){position:relative;overflow:hidden}
+button:not(.secondary):not(.danger):after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,#ffffff24 50%,transparent 70%);transform:translateX(-110%);pointer-events:none}
+@media(hover:hover){button:not(.secondary):not(.danger):hover:not(:disabled):after{animation:tech-sweep 500ms ease-out}.ticket:hover{transform:translateY(-2px)} }
+.ticket{transition:transform 210ms ease-out,border-color 210ms,box-shadow 210ms,background-color 210ms}
+.ticket:focus-within{border-color:var(--focus-ring);box-shadow:var(--shadow-hover)}
+@keyframes tech-trace{to{transform:scaleX(1)}}
+@keyframes tech-step{from{opacity:.5;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes tech-grid{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes tech-signal{0%,100%{box-shadow:0 0 0 0 #06b6d400}45%{box-shadow:0 0 0 7px #06b6d420}}
+@keyframes tech-flow{from{opacity:.5;transform:translateX(-5px)}to{opacity:1;transform:none}}
+@keyframes tech-sweep{to{transform:translateX(110%)}}
+@media(prefers-reduced-motion:reduce){.tech-reveal{opacity:1}.how-section .card:before{transform:scaleX(1)!important}button:not(.secondary):not(.danger):after{display:none}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;transform:none!important}}
 
